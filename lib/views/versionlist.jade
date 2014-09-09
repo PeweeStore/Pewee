@@ -5,9 +5,9 @@ mixin versionTile(appName, version, oss)
 
 mixin iOSDownloadButton(appName, version, enabled)
   if enabled
-    a.btn.btn-info.btn-block(id='ios-download-button-'+version, href="#")
+    a.btn-info.btn-block.ios-download-button(id='ios-download-button-'+version, href="#")
       span.glyphicon.glyphicon-download.pull-left
-      | Download
+      span.download-text Download
     script(type="text/javascript").
       function getCookie(cname) {
         var name = cname + "=";
@@ -22,31 +22,29 @@ mixin iOSDownloadButton(appName, version, enabled)
       $("a[id='ios-download-button-#{version}']").attr('href', href);
 
   else
-    a.btn.btn-info.btn-block.disabled
+    a.btn.btn-info.btn-block.disabled.ios-download-button
       span.glyphicon.glyphicon-download.pull-left
-      | Download
+      span.download-text Download
 
 
 mixin androidDownloadButton(appName, version, enabled)
   if enabled
-    a.btn.btn-success.btn-block(href='/app/'+appName+'/'+version+'/download/android')
+    a.btn.btn-success.btn-block.android-download-button(href='/app/'+appName+'/'+version+'/download/android')
       span.glyphicon.glyphicon-download.pull-left
-      | Download
+      span.download-text Download
   else
-    a.btn.btn-success.btn-block.disabled
+    a.btn.btn-success.btn-block.disabled.android-download-button
       span.glyphicon.glyphicon-download.pull-left
-      | Download
+      span.download-text Download
 
 
 mixin versionLine(appName, version, os)
-  tr(onClick="tapOnVersionLine('#{appName}', '#{version}');")
-    td
+  .row
+    .col-xs-6
       h3= version
-    td
-      a.btn.btn-default.btn-block(href='/app/#{appName}/#{version}/detail') Detail
-    td
+    .col-xs-3
       +iOSDownloadButton(appName, version, os.contains('ios'))
-    td
+    .col-xs-3
       +androidDownloadButton(appName, version, os.contains('android'))
 
 
@@ -55,17 +53,20 @@ block content
   #app-detail-jumbotron.jumbotron
     img#app-detail-image.pull-right
     h1 #{app}
-
-  table.table.table-hover.table-bordered.table-responsive#table-version
-    thead
-      tr.active
-        th: h4 Version
-        th(width=100)
-        th(width=200): h3 iOS
-        th(width=200): h3 Android
-    tbody
-      each os, version in versions
-        +versionLine(app, version, os)
+  .container-fluid
+    .row
+      .col-xs-6
+        h4#app-detail-app-list-version-header Version
+      .col-xs-3
+        h3#app-detail-app-list-ios-header
+          img(src='/img/apple.png')
+          span iOS
+      .col-xs-3
+        h3#app-detail-app-list-android-header
+          img(src='/img/android.png')
+          span Android
+    each os, version in versions
+      +versionLine(app, version, os)
 
 
   script(type='text/javascript').
