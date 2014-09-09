@@ -1,0 +1,37 @@
+extends layout
+
+mixin versionDownloadIOS(appName, versionObject)
+  if versionObject
+  div
+    h1 iOS
+    a#ios-download-button Download
+    script(type="text/javascript").
+      var href = 'itms-services://?action=download-manifest&url=https://' + location.hostname + ':' + location.port + '/app/#{appName}/#{versionObject}/download/ios'
+      $("#ios-download-button").attr('href', href);
+
+
+
+mixin versionDownloadAndroid(appName, versionObject)
+  div
+    h1 Android
+    a(href=('/app/'+appName+'/'+versionObject+'/download/android')) Download
+
+mixin versionDoesntExist()
+  div no version
+
+
+
+block content
+  h1 Good !
+  h2= version
+  h2= appName
+  div
+    if detail.indexOf('ios') != -1
+      +versionDownloadIOS(appName, version)
+    else
+      +versionDoesntExist()
+  div
+    if detail.indexOf('android') != -1
+      +versionDownloadAndroid(appName, version)
+    else
+      +versionDoesntExist()

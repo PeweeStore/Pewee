@@ -1,0 +1,48 @@
+extends layout
+
+mixin appTile(app)
+  .app-tile(id='tileApp-'+app, onClick='tapOnTileApp("'+app+'");')
+    img
+    p.
+      #{app}
+
+
+    script(type='text/javascript').
+      $(document).ready(function () {
+        var app = '#{app}';
+        $.getJSON('/app/'+app+'/detail', function(data) {
+          if(data.image) {
+            $('#tileApp-'+app + " > img").attr('src', 'data:image/png;base64,'+data.image);
+          }
+          //$('#tileApp-'+app).html(JSON.stringify(data));
+        });
+
+      });
+
+block content
+
+  .jumbotron
+    .container-fluid
+      .row
+        .col-md-2
+          img(src='/res/img/logo', style="max-width:100%;max-height:100%;width:auto;height:auto;display:block;")
+        .col-md-10
+          h1= settings.hello.title
+          p= settings.hello.message
+          p
+            a.btn.btn-info(href='mailto:'+settings.contactEmail) More informations !
+
+
+
+  .fluid-container
+    - for (var appIndex = 0; appIndex < apps.length ; appIndex++)
+      - var app = apps[appIndex];
+      - if(appIndex % 3 == 0)
+        .row
+      .col-md-4
+        +appTile(app)
+
+  script(type='text/javascript').
+    function tapOnTileApp(appName) {
+      document.location = '/app/'+appName+'/index';
+    }

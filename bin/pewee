@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+var debug = require('debug')('InHouseAppStore');
+
+
+var settings = require('../lib/settings.js');
+var winston = require('winston');
+
+var program = require('commander');
+
+require('../lib/additions.js');
+
+program
+  .on('--help', function() {
+    console.log("Pewee Copyright (C) 2014 Vincent Saluzzo <vincentsaluzzo@gmail.com>")
+    console.log("Source on <https://github.com/vincentsaluzzo/pewee>")
+
+  })
+  .version('0.0.1')
+  .option('-d, --path <folderpath>', 'Start the app store with a specific folder (generate temp folder by default)')
+  .option('-h, --hostname <hostname>', 'Specify a custom hostname for the server (by default: all)')
+  .option('-p, --port <port number>', 'Specify a custom port for the server (default is 3000)')
+  .option('-s, --secure', 'Specify if start the server in HTTPS or no (default to no)')
+
+program.parse(process.argv);
+
+var start = function() {
+
+  var app = require('../lib/app.js');
+
+  winston.info('Start App Store with distribution folder %s ...', settings.distributionFolder);
+
+  app.start(program.hostname, program.port, program.secure, function(address, port) {
+    winston.info("App Store started on %s:%d", address, port);
+  });
+}
+
+if(program.path) {
+  settings.fillWithConfigFolder(program.path, function(error) {
+    start();
+  });
+} else {
+  start();
+}

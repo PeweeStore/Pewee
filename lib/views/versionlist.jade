@@ -1,0 +1,77 @@
+extends layout
+
+mixin versionTile(appName, version, oss)
+  a(href=('/app/'+appName+'/'+version+'/detail')) #{version} #{oss}
+
+mixin iOSDownloadButton(appName, version, enabled)
+  if enabled
+    a.btn.btn-info.btn-block(id='ios-download-button-'+version, href="#")
+      span.glyphicon.glyphicon-download.pull-left
+      | Download
+    script(type="text/javascript").
+      function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+          var c = ca[i].trim();
+          if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        }
+        return "";
+      }
+      var href = 'itms-services://?action=download-manifest&url=https://' + location.hostname + (location.port? (':' + location.port): "") + '/app/#{appName}/#{version}/download/ios/' + getCookie("#{appName}");
+      $("a[id='ios-download-button-#{version}']").attr('href', href);
+
+  else
+    a.btn.btn-info.btn-block.disabled
+      span.glyphicon.glyphicon-download.pull-left
+      | Download
+
+
+mixin androidDownloadButton(appName, version, enabled)
+  if enabled
+    a.btn.btn-success.btn-block(href='/app/'+appName+'/'+version+'/download/android')
+      span.glyphicon.glyphicon-download.pull-left
+      | Download
+  else
+    a.btn.btn-success.btn-block.disabled
+      span.glyphicon.glyphicon-download.pull-left
+      | Download
+
+
+mixin versionLine(appName, version, os)
+  tr(onClick="tapOnVersionLine('#{appName}', '#{version}');")
+    td
+      h3= version
+    td
+      a.btn.btn-default.btn-block(href='/app/#{appName}/#{version}/detail') Detail
+    td
+      +iOSDownloadButton(appName, version, os.contains('ios'))
+    td
+      +androidDownloadButton(appName, version, os.contains('android'))
+
+
+block content
+
+  #app-detail-jumbotron.jumbotron
+    img#app-detail-image.pull-right
+    h1 #{app}
+
+  table.table.table-hover.table-bordered.table-responsive#table-version
+    thead
+      tr.active
+        th: h4 Version
+        th(width=100)
+        th(width=200): h3 iOS
+        th(width=200): h3 Android
+    tbody
+      each os, version in versions
+        +versionLine(app, version, os)
+
+
+  script(type='text/javascript').
+    var app = '#{app}';
+    $.getJSON('/app/'+app+'/detail', function(data) {
+      if(data.image) {
+        $('#app-detail-image').attr('src', 'data:image/png;base64,'+data.image);
+      }
+    });

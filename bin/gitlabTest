@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+var debug = require('debug')('InHouseAppStore');
+
+var Gitlab = require('../lib/gitlab.js');
+
+Gitlab.getProject("itelios/itframework-core-ios", function(project) {
+
+
+  // Gitlab.getProjectTags(project, function(tags) {
+  //   console.log(tags);
+  // });
+
+  // Gitlab.getProjectMembers(project, function(members) {
+  //   console.log(members);
+  // });
+
+  console.log(JSON.stringify(project, null, '\t'));
+
+  console.log("Retrieve Group of " + project.project.name);
+
+  // project.getGroup(function(group) {
+  //   // console.log(JSON.stringify(group, null, '\t'));
+  //   group.getMembers(function(members) {
+  //     console.log(JSON.stringify(members, null, '\t'));
+  //   });
+  // });
+
+  // project.getAllMembers(function(members) {
+  //   console.log(JSON.stringify(members, null, '\t'));
+  // });
+
+  // project.getAllCommits(function(commits) {
+  //   console.log(commits);
+  // });
+  //
+  //
+  // console.log(" ----- ")
+  //
+  //
+  // project.getTags(function(tags) {
+  //   console.log(tags);
+  // })
+  //
+  // console.log(" ----- ")
+
+
+  project.getAllComitsForTag("1.0.7", function(commits) {
+    console.log(commits);
+  })
+});

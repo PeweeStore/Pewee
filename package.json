@@ -1,0 +1,59 @@
+{
+  "name": "Pewee",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/pewee"
+  },
+  "bin": {
+    "pewee": "./bin/pewee"
+  },
+  "description": "",
+  "author": "Vincent Saluzzo <vincentsaluzzo@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vincentsaluzzo/Pewee"
+  },
+  "bugs": {
+    "url": "https://github.com/vincentsaluzzo/Pewee/issues"
+  },
+  "keywords": [
+    "pewee",
+    "OTA",
+    "inhouse",
+    "ios",
+    "android",
+    "store",
+    "appstore"
+  ],
+  "dependencies": {
+    "express": "~4.8.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4",
+    "ejs": "~0.8.5",
+    "jade": "*",
+    "less-middleware": "1.0.x",
+    "randomstring": "*",
+    "commander": "*",
+    "underscore": "*",
+    "collection": "*",
+    "basic-auth": "*",
+    "multer": "*",
+    "mime": "*",
+    "adm-zip": "*",
+    "plist": "*",
+    "bplist-parser": "*",
+    "checksum": "*",
+    "apk-parser2": "*",
+    "request": "*",
+    "poster": "*",
+    "serve-favicon": "*",
+    "pkginfo": "*",
+    "winston": "*",
+    "express-winston": "*",
+    "bcrypt-nodejs": "*",
+    "aes-helper": "*"
+  },
+  "license": "GPL-3.0"
+}
