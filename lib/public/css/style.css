@@ -84,3 +84,61 @@ a {
 #table-version > thead > tr > th > h4 {
   font-weight: bold;
 }
+
+#app-detail-app-list-version-header {
+  font-weight: bold;
+}
+
+#app-detail-app-list-ios-header > img {
+  height:1em;margin-right:10px;margin-top:-0.25em;
+}
+
+#app-detail-app-list-android-header > img {
+  height:1em;margin-right:10px;margin-top:-0.25em;
+}
+
+@media (max-width: 550px) {
+  .ios-download-button {
+    padding-left: 15px;
+  }
+  .android-download-button {
+    padding-left: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .ios-download-button > .download-text {
+    font-size:0
+  }
+  .ios-download-button > .glyphicon {
+    width:100%
+  }
+
+
+  .android-download-button > .download-text {
+    font-size:0
+  }
+  .android-download-button > .glyphicon {
+    width:100%
+  }
+
+  #app-detail-app-list-ios-header > span {
+    font-size:0
+  }
+  #app-detail-app-list-android-header > span {
+    font-size:0
+  }
+  #app-detail-app-list-ios-header > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px
+  }
+  #app-detail-app-list-android-header > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px
+  }
+}
