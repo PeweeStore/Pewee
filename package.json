@@ -1,21 +1,21 @@
 {
-  "name": "Pewee",
-  "version": "0.0.2",
+  "name": "pewee",
+  "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/pewee"
-  },
-  "bin": {
-    "pewee": "./bin/pewee"
-  },
   "description": "",
   "author": "Vincent Saluzzo <vincentsaluzzo@gmail.com>",
+  "contributors": [
+    {
+      "name": "Vincent Saluzzo",
+      "email": "vincentsaluzzo@gmail.com"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vincentsaluzzo/Pewee"
+    "url": "https://github.com/PeweeStore/Pewee"
   },
   "bugs": {
-    "url": "https://github.com/vincentsaluzzo/Pewee/issues"
+    "url": "https://github.com/PeweeStore/Pewee/issues"
   },
   "keywords": [
     "pewee",
