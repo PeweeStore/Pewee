@@ -5,7 +5,7 @@ mixin versionTile(appName, version, oss)
 
 mixin iOSDownloadButton(appName, version, enabled)
   if enabled
-    a.btn-info.btn-block.ios-download-button(id='ios-download-button-'+version, href="#")
+    a.btn.btn-info.btn-block.ios-download-button(id='ios-download-button-'+version, href="#")
       span.glyphicon.glyphicon-download.pull-left
       span.download-text Download
     script(type="text/javascript").
@@ -51,7 +51,7 @@ mixin versionLine(appName, version, os)
 block content
 
   #app-detail-jumbotron.jumbotron
-    img#app-detail-image.pull-right
+    img#app-detail-image.pull-right(src='/res/img/logo/'+app, alt="")
     h1 #{app}
   .container-fluid
     .row
@@ -67,12 +67,3 @@ block content
           span Android
     each os, version in versions
       +versionLine(app, version, os)
-
-
-  script(type='text/javascript').
-    var app = '#{app}';
-    $.getJSON('/app/'+app+'/detail', function(data) {
-      if(data.image) {
-        $('#app-detail-image').attr('src', 'data:image/png;base64,'+data.image);
-      }
-    });
