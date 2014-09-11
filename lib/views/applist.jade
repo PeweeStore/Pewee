@@ -2,22 +2,9 @@ extends layout
 
 mixin appTile(app)
   .app-tile(id='tileApp-'+app, onClick='tapOnTileApp("'+app+'");')
-    img
+    img(src='/res/img/logo/'+app, alt="")
     p.
       #{app}
-
-
-    script(type='text/javascript').
-      $(document).ready(function () {
-        var app = '#{app}';
-        $.getJSON('/app/'+app+'/detail', function(data) {
-          if(data.image) {
-            $('#tileApp-'+app + " > img").attr('src', 'data:image/png;base64,'+data.image);
-          }
-          //$('#tileApp-'+app).html(JSON.stringify(data));
-        });
-
-      });
 
 block content
 
