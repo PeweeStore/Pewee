@@ -21,5 +21,12 @@ html
             img(src='/res/img/logo' style='height:2em; margin-top:-10px;margin-right:10px')
             | #{settings.storeName}
 
-    .container-fluid(style="min-width:320px")
+    #body-content.container-fluid(style="min-width:320px")
       block content
+
+    .footer
+      div
+        p(style='text-align:center')
+          img(src="/res/img/logo")
+          |  Powered by
+          a(href="http://github.com/PeweeStore/Pewee") Pewee
