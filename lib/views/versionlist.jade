@@ -39,31 +39,67 @@ mixin androidDownloadButton(appName, version, enabled)
 
 
 mixin versionLine(appName, version, os)
-  .row
-    .col-xs-6
-      h3= version
-    .col-xs-3
-      +iOSDownloadButton(appName, version, os.contains('ios'))
-    .col-xs-3
-      +androidDownloadButton(appName, version, os.contains('android'))
+  if (ios && android)
+    .row
+      .col-xs-6
+        h3= version
+      .col-xs-3
+        +iOSDownloadButton(appName, version, os.contains('ios'))
+      .col-xs-3
+        +androidDownloadButton(appName, version, os.contains('android'))
+  else
+    .row
+      .col-xs-9
+        h3= version
+      .col-xs-3
+        if ios
+          +iOSDownloadButton(appName, version, os.contains('ios'))
+        else
+          +androidDownloadButton(appName, version, os.contains('android'))
 
+mixin header()
+  .row
+    if (ios && android)
+      .col-xs-6
+        h4#app-detail-app-list-version-header Version
+      .col-xs-3(style="text-align:center")
+        h3#app-detail-app-list-ios-header
+          img(src='/img/apple.png')
+          span iOS
+      .col-xs-3(style="text-align:center")
+        h3#app-detail-app-list-android-header
+          img(src='/img/android.png')
+          span Android
+
+    else
+      .col-xs-9
+        h4#app-detail-app-list-version-header Version
+      .col-xs-3(style="text-align:center")
+        if ios
+          h3#app-detail-app-list-ios-header
+            img(src='/img/apple.png')
+            span iOS
+        else
+          h3#app-detail-app-list-android-header
+            img(src='/img/android.png')
+            span Android
 
 block content
+  - var ios = false;
+  - var android = false;
+  - for (key in versions)
+    - var os = versions[key];
+    - if (os.contains('ios'))
+      - ios = true;
+    - if (os.contains('android'))
+      - android = true
 
   #app-detail-jumbotron.jumbotron
     img#app-detail-image.pull-right(src='/res/img/logo/'+app, alt="")
     h1 #{app}
+
   .container-fluid
-    .row
-      .col-xs-6
-        h4#app-detail-app-list-version-header Version
-      .col-xs-3
-        h3#app-detail-app-list-ios-header
-          img(src='/img/apple.png')
-          span iOS
-      .col-xs-3
-        h3#app-detail-app-list-android-header
-          img(src='/img/android.png')
-          span Android
+    +header()
+
     each os, version in versions
       +versionLine(app, version, os)
