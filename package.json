@@ -46,7 +46,7 @@
     "plist": "*",
     "bplist-parser": "*",
     "checksum": "*",
-    "apk-parser2": "*",
+    "adbkit-apkreader": "*",
     "request": "*",
     "poster": "*",
     "serve-favicon": "*",
