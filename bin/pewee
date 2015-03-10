@@ -11,11 +11,13 @@ require('../lib/additions.js');
 
 program
   .on('--help', function() {
-    console.log("Pewee Copyright (C) 2014 Vincent Saluzzo <vincentsaluzzo@gmail.com>")
-    console.log("Source on <https://github.com/vincentsaluzzo/pewee>")
+    console.log("Pewee Store http://peweestore.github.io");
+    console.log("Source on <https://github.com/peweestore/pewee>");
+    consloe.log("Licenced with GNU-GPL V3 and developed by Vincent Saluzzo <vincentsaluzzo@gmail.com>")
+
 
   })
-  .version('0.0.1')
+  .version('1.0.6')
   .option('-d, --path <folderpath>', 'Start the app store with a specific folder (generate temp folder by default)')
   .option('-h, --hostname <hostname>', 'Specify a custom hostname for the server (by default: all)')
   .option('-p, --port <port number>', 'Specify a custom port for the server (default is 3000)')
