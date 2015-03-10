@@ -17,7 +17,7 @@ program
 
 
   })
-  .version('1.0.6')
+  .version('1.0.7')
   .option('-d, --path <folderpath>', 'Start the app store with a specific folder (generate temp folder by default)')
   .option('-h, --hostname <hostname>', 'Specify a custom hostname for the server (by default: all)')
   .option('-p, --port <port number>', 'Specify a custom port for the server (default is 3000)')
