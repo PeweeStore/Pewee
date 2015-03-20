@@ -25,6 +25,16 @@
 
   "showHomeStore" : true,
 
-	"customCSS" : "A custom file placed at the root to customized the css store"
+	"customCSS" : "A custom file placed at the root to customized the css store",
+
+	/* Global auto clean rule applyed to project if no surcharged on project */
+	"globalAutoCleanRule": {
+
+		/* kind of rule, actualy, only creation_date exist */
+		"rule": "creation_date",
+
+		/* Number of file to keep (each per platform) */
+		"number": 3
+	}
 
 }
