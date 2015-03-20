@@ -45,18 +45,18 @@ mixin versionLine(appName, version, os)
       .col-xs-6
         h3= version
       .col-xs-3
-        +iOSDownloadButton(appName, version, os.contains('ios'))
+        +iOSDownloadButton(appName, version, os.ios)
       .col-xs-3
-        +androidDownloadButton(appName, version, os.contains('android'))
+        +androidDownloadButton(appName, version, os.android)
   else
     .row
       .col-xs-9
         h3= version
       .col-xs-3
         if ios
-          +iOSDownloadButton(appName, version, os.contains('ios'))
+          +iOSDownloadButton(appName, version, os.ios)
         else
-          +androidDownloadButton(appName, version, os.contains('android'))
+          +androidDownloadButton(appName, version, os.android)
 
 mixin header()
   .row
@@ -90,9 +90,9 @@ block content
   - var android = false;
   - for (key in versions)
     - var os = versions[key];
-    - if (os.contains('ios'))
+    - if (os.ios)
       - ios = true;
-    - if (os.contains('android'))
+    - if (os.android)
       - android = true
 
   #app-detail-jumbotron.jumbotron
