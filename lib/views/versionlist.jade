@@ -19,9 +19,8 @@ mixin iOSDownloadButton(appName, version, enabled)
         return "";
       }
       var dlUrl = 'https://' + location.hostname + (location.port? (':' + location.port): "") + '/app/' + '#{appName}' + '/#{version}/download/ios/' + getCookie("#{appName}");
-      var href = 'itms-services://?action=download-manifest&url=' + dlUrl
-      $("a[id='ios-download-button-#{version}']").attr('href', href);
-
+      var href = 'itms-services://?action=download-manifest&url=' + encodeURI(dlUrl)
+      $("a[id='ios-download-button-#{version}']").attr('href', encodeURI(href));
   else
     a.btn.btn-info.btn-block.disabled.ios-download-button
       span.glyphicon.glyphicon-download.pull-left
