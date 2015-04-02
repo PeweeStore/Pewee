@@ -6,20 +6,42 @@ html
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href='/css/bootstrap.css')
+    link(rel='stylesheet', href='/css/basic.css')
+    link(rel='stylesheet', href='/css/dropzone.css')
     link(rel='stylesheet', href='/css/style.css')
     link(rel='stylesheet', href='/res/css')
     script(src="//code.jquery.com/jquery-1.11.0.min.js")
     script(src="//code.jquery.com/jquery-migrate-1.2.1.min.js")
     script(src="/js/bootstrap.js")
     script(src='/js/retina.min.js')
+    script(src="/js/dropzone.js")
 
   body
     nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
       .container-fluid
         .navbar-header()
+          button.navbar-toggle.collapsed(data-toggle="collapse", data-target="#navbar-admin-section")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
           a.navbar-brand(href='/')
             img(src='/res/img/logo' style='height:2em; margin-top:-10px;margin-right:10px')
             | #{settings.storeName}
+        .navbar-left
+          block navbarcontent
+        #navbar-admin-section.collapse.navbar-collapse.navbar-right
+          ul.nav.navbar-nav
+            if !authenticateAsAdministrator
+              li: a(href="")
+                span.glyphicon.glyphicon-log-in#admin-logstate-button
+                span.hidden-sm.hidden-lg.hidden-md#admin-logstate-text Log-in as Admin
+            else 
+              li: a(href="")
+                span.glyphicon.glyphicon-log-out#admin-logstate-button
+                span.hidden-sm.hidden-lg.hidden-md#admin-logstate-text Log-out
+
+
 
     #body-content.container-fluid(style="min-width:320px")
       block content

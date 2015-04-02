@@ -131,31 +131,45 @@ a {
   height:1em;margin-right:10px;margin-top:-0.25em;
 }
 
-@media (max-width: 550px) {
-  .ios-download-button {
-    padding-left: 15px;
-  }
-  .android-download-button {
-    padding-left: 15px;
-  }
+
+@media (max-width: 800px) {
+  .app-detail-version-row {
+    margin-bottom: 20px;
+  }  
 }
 
-@media (max-width: 900px) {
 
-  .ios-download-button > .download-text {
-    font-size:0
-  }
-  .ios-download-button > .glyphicon {
-    width:100%
-  }
+#admin-logstate-button {
+  font-size: 20px;
+}
 
+#admin-logstate-text {
+  margin-left: 20px;
+  font-size: 1.1em;
+}
 
-  .android-download-button > .download-text {
-    font-size:0
-  }
-  .android-download-button > .glyphicon {
-    width:100%
-  }
+.remove-button{
+  padding-left: 5px;
+  padding-right: 5px;
+  /*max-width: 60px;*/
+  min-width: 60px;
+}
+
+.android-download-button {
+  padding-left: 5px;
+  padding-right: 5px;
+  /*max-width: 60px;*/
+  min-width: 60px;
+}
+
+.ios-download-button {
+  padding-left: 5px;
+  padding-right: 5px;
+  /*max-width: 60px;*/
+  min-width: 60px;
+}
+
+@media (max-width: 650px) {
 
   #app-detail-app-list-ios-header > span {
     font-size:0
@@ -176,3 +190,9 @@ a {
     margin-top: 0px
   }
 }
+
+#dropzone { margin-bottom: 3rem; }
+
+.dropzone { border: 2px dashed #0087F7; border-radius: 5px; background: white; }
+.dropzone .dz-message { font-weight: 400; }
+.dropzone .dz-message .note { font-size: 0.8em; font-weight: 200; display: block; margin-top: 1.4rem; }

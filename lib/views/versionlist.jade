@@ -6,8 +6,7 @@ mixin versionTile(appName, version, oss)
 mixin iOSDownloadButton(appName, version, enabled)
   if enabled
     a.btn.btn-info.btn-block.ios-download-button(id='ios-download-button-'+version, href="#")
-      span.glyphicon.glyphicon-download.pull-left
-      span.download-text Download
+      span.glyphicon.glyphicon-download
     script(type="text/javascript").
       function getCookie(cname) {
         var name = cname + "=";
@@ -23,66 +22,113 @@ mixin iOSDownloadButton(appName, version, enabled)
       $("a[id='ios-download-button-#{version}']").attr('href', encodeURI(href));
   else
     a.btn.btn-info.btn-block.disabled.ios-download-button
-      span.glyphicon.glyphicon-download.pull-left
-      span.download-text Download
+      span.glyphicon.glyphicon-download
 
 
 mixin androidDownloadButton(appName, version, enabled)
   if enabled
     a.btn.btn-success.btn-block.android-download-button(href='/app/'+appName+'/'+version+'/download/android')
-      span.glyphicon.glyphicon-download.pull-left
-      span.download-text Download
+      span.glyphicon.glyphicon-download
   else
     a.btn.btn-success.btn-block.disabled.android-download-button
-      span.glyphicon.glyphicon-download.pull-left
-      span.download-text Download
+      span.glyphicon.glyphicon-download
 
 
-mixin versionLine(appName, version, os)
-  if (ios && android)
-    .row
-      .col-xs-6
-        h3= version
-      .col-xs-3
-        +iOSDownloadButton(appName, version, os.ios)
-      .col-xs-3
-        +androidDownloadButton(appName, version, os.android)
+
+mixin removeAndroidVersionButton(appName, version, enabled)
+  if enabled
+    a.btn.btn-danger.btn-block.remove-button(href='/app/'+appName+'/'+version+'/remove/android')
+      span.glyphicon.glyphicon-trash
+  else
+    a.btn.btn-danger.btn-block.disabled.remove-button
+      span.glyphicon.glyphicon-trash
+
+
+mixin removeiOSVersionButton(appName, version, enabled)
+  if enabled
+    a.btn.btn-danger.btn-block.remove-button(href='/app/'+appName+'/'+version+'/remove/ios')
+      span.glyphicon.glyphicon-trash
+  else
+    a.btn.btn-danger.btn-block.disabled.remove-button
+      span.glyphicon.glyphicon-trash
+
+
+mixin iOSActions(appName, version, enabled)
+  if !authenticateAsAdministrator
+    +iOSDownloadButton(appName, version, enabled)
   else
     .row
-      .col-xs-9
+      .col-sm-6
+        +iOSDownloadButton(appName, version, enabled)
+      .col-sm-6
+        +removeiOSVersionButton(appName, verison, enabled)
+
+mixin androidActions(appName, version, enabled)
+  if !authenticateAsAdministrator
+    +androidDownloadButton(appName, version, enabled)
+  else
+    .row
+      .col-sm-6
+        +androidDownloadButton(appName, version, enabled)
+      .col-sm-6
+        +removeAndroidVersionButton(appName, verison, enabled)
+
+mixin versionLine(appName, version, os)
+  .row.app-detail-version-row
+    if (ios && android)
+      .col-md-8.col-xs-4
         h3= version
-      .col-xs-3
+      .col-md-2.col-xs-4
+        +iOSActions(appName, version, os.ios)
+      .col-md-2.col-xs-4
+        +androidActions(appName, version, os.android)
+    else
+      .col-xs-8.col-md-10
+        h3= version
+      .col-xs-4.col-md-2
         if ios
-          +iOSDownloadButton(appName, version, os.ios)
+          +iOSActions(appName, version, os.ios)
         else
-          +androidDownloadButton(appName, version, os.android)
+          +androidActions(appName, version, os.android)
 
 mixin header()
   .row
     if (ios && android)
-      .col-xs-6
+      .col-md-8.col-xs-4
         h4#app-detail-app-list-version-header Version
-      .col-xs-3(style="text-align:center")
+      .col-md-2.col-xs-4(style="text-align:center")
         h3#app-detail-app-list-ios-header
           img(src='/img/apple.png')
-          span iOS
-      .col-xs-3(style="text-align:center")
+          //- span iOS
+      .col-md-2.col-xs-4(style="text-align:center")
         h3#app-detail-app-list-android-header
           img(src='/img/android.png')
-          span Android
+          //- span Android
 
     else
-      .col-xs-9
+      .col-xs-8.col-md-10
         h4#app-detail-app-list-version-header Version
-      .col-xs-3(style="text-align:center")
+      .col-xs-4.col-md-2(style="text-align:center")
         if ios
           h3#app-detail-app-list-ios-header
             img(src='/img/apple.png')
-            span iOS
+            //- span iOS
         else
           h3#app-detail-app-list-android-header
             img(src='/img/android.png')
-            span Android
+            //- span Android
+
+block navbarcontent
+  if authenticateAsAdministrator
+    ul.nav.navbar-nav
+      li: a(data-toggle="modal" data-target="#delete-app-modal") 
+        span.glyphicon.glyphicon-trash
+        |  Delete project
+      li: a(data-toggle="modal" data-target="#upload-version-modal") 
+        span.glyphicon.glyphicon-upload
+        |  Upload an app
+        
+
 
 block content
   - var ios = false;
@@ -103,3 +149,23 @@ block content
 
     each os, version in versions
       +versionLine(app, version, os)
+
+
+
+  #delete-app-modal.modal.fade(role="dialog")
+    .modal-dialog: .modal-content
+        .modal-body
+          h4 Are you sure ?
+        .modal-footer
+          button.btn.btn-sm.btn-default(data-dismiss="modal") Cancel
+          button.btn.btn-sm.btn-danger() Delete project
+
+  #upload-version-modal.modal.fade(role="dialog")
+    .modal-dialog: .modal-content
+      .modal-body
+        form.dropzone.dz-clickable#upload-version-dropzone(action="#")
+          //- input(type="file", name="file")
+      .modal-footer
+          button.btn.btn-sm.btn-default(data-dismiss="modal") Cancel
+
+
