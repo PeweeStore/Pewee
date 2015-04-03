@@ -5,14 +5,21 @@ block content
     .panel-heading
       h1
         span.glyphicon.glyphicon-lock.pull-right
-        | Protected
+        if appName
+          | #{appName} is protected
+        else
+          | Admin access
+          span.glyphicon.glyphicon-wrench.pull-right(style="margin-right:20px")
 
 
     .panel-body
-      p The application store you want to access are <b>securised</b> by password.
+      if appName
+        p The application store you want to access are <b>securised</b> by password.
+      else
+        p The admin section is securised by a password, if you don't know it and you should, contact administrator!
       br
       form(method='POST')
         .form-group
           input.form-control.input-lg(type='password', name='token', autofocus, placeholder="Type the password...")
         p
-          input.btn.btn-warning.btn-lg(type='submit', value="Submit !", style="width:100%")
+          input.btn.btn-warning.btn-lg(type='submit', value="Login", style="width:100%")

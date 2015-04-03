@@ -8,15 +8,6 @@ mixin iOSDownloadButton(appName, version, enabled)
     a.btn.btn-info.btn-block.ios-download-button(id='ios-download-button-'+version, href="#")
       span.glyphicon.glyphicon-download
     script(type="text/javascript").
-      function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0; i<ca.length; i++) {
-          var c = ca[i].trim();
-          if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-        }
-        return "";
-      }
       var dlUrl = 'https://' + location.hostname + (location.port? (':' + location.port): "") + '/app/' + '#{appName}' + '/#{version}/download/ios/' + getCookie("#{appName}");
       var href = 'itms-services://?action=download-manifest&url=' + encodeURI(dlUrl)
       $("a[id='ios-download-button-#{version}']").attr('href', encodeURI(href));
@@ -119,7 +110,7 @@ mixin header()
             //- span Android
 
 block navbarcontent
-  if authenticateAsAdministrator
+  if authenticateAsAdministrator && adminSectionAvailable
     ul.nav.navbar-nav
       li: a(data-toggle="modal" data-target="#upload-version-modal") 
         span.glyphicon.glyphicon-upload
@@ -158,7 +149,7 @@ block content
           h4 Are you sure ?
         .modal-footer
           button.btn.btn-sm.btn-default(data-dismiss="modal") Cancel
-          button.btn.btn-sm.btn-danger() Delete project
+          a.btn.btn-sm.btn-danger(href="/app/" + app + "/delete") Delete project
 
   include upload-modal.jade
 

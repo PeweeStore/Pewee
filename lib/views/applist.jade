@@ -6,6 +6,13 @@ mixin appTile(app)
     p.
       #{app}
 
+block navbarcontent
+  if authenticateAsAdministrator && adminSectionAvailable
+    ul.nav.navbar-nav
+      li: a(data-toggle="modal" data-target="#create-project-modal") 
+        span.glyphicon.glyphicon-upload
+        |  Create new project
+
 block content
 
   .jumbotron
@@ -33,3 +40,54 @@ block content
     function tapOnTileApp(appName) {
       document.location = '/app/'+appName+'/index';
     }
+
+  #create-project-modal.modal.fade(role="dialog")
+    .modal-dialog: .modal-content
+        .modal-header
+          h1 Create a new project
+        .modal-body
+          form.form-horizontal#create-project-form
+            .form-group.form-group-lg#create-project-fromgroup-appname
+              label.col-sm-4.control-label(for="create-project-input-appname") Name
+              .col-sm-8
+                input#create-project-input-appname.form-control(type="text", placeholder="")
+            .form-group.form-group-lg
+              label.col-sm-4.control-label(for="create-project-input-password") Password
+              .col-sm-8
+                input#create-project-input-password.form-control(type="secure", name="password", placeholder="")
+            .form-group.form-group-lg
+              label.col-sm-4.control-label(for="create-project-input-image") Image
+              .col-sm-8
+                input#create-project-input-image(type="file", name="image")
+
+        .modal-footer
+          button.btn.btn-sm.btn-default(data-dismiss="modal") Cancel
+          button.btn.btn-sm.btn-primary#create-project-modal-submit Submit
+
+  script(type="text/javascript").
+    $("#create-project-form").on('submit', function(event) {
+      event.preventDefault();
+
+      var appName = $('#create-project-input-appname').val();
+      if(appName === '') {
+        $("#create-project-fromgroup-appname").addClass("has-error");
+        return;
+      } 
+
+      $.ajax({
+        url: "/app/" + appName + "/create",
+        type: "POST",
+        data: new FormData(this),//$("#create-project-form").serialize(),
+        success: function(result) {
+          window.location.href = "/app/" + appName
+        },
+        contentType: false,
+        processData: false
+      });
+    });
+
+
+    $("#create-project-modal-submit").on('click', function() {
+      $("#create-project-form").submit();
+    });
+

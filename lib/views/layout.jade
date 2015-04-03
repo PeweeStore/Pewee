@@ -17,6 +17,7 @@ html
     script(src='/js/retina.min.js')
     script(src="/js/dropzone.js")
     script(src="/js/loader.js")
+    script(src="/js/global.js")
 
   body
     nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
@@ -32,16 +33,17 @@ html
             | #{settings.storeName}
         .navbar-left
           block navbarcontent
-        #navbar-admin-section.collapse.navbar-collapse.navbar-right
-          ul.nav.navbar-nav
-            if !authenticateAsAdministrator
-              li: a(href="")
-                span.glyphicon.glyphicon-log-in#admin-logstate-button
-                span.hidden-sm.hidden-lg.hidden-md#admin-logstate-text Log-in as Admin
-            else 
-              li: a(href="")
-                span.glyphicon.glyphicon-log-out#admin-logstate-button
-                span.hidden-sm.hidden-lg.hidden-md#admin-logstate-text Log-out
+        if adminSectionAvailable
+          #navbar-admin-section.collapse.navbar-collapse.navbar-right
+            ul.nav.navbar-nav
+              if !authenticateAsAdministrator
+                li: a#admin-logstate-button(href="/admin/login?fallback="+(fallbackParameters || currentLocation))
+                  span.glyphicon.glyphicon-log-in
+                  span.hidden-sm.hidden-lg.hidden-md#admin-logstate-text Log-in as Admin
+              else 
+                li: a#admin-logstate-button(href="/admin/logout?fallback="+currentLocation)
+                  span.glyphicon.glyphicon-log-out
+                  span.hidden-sm.hidden-lg.hidden-md#admin-logstate-text Log-out
 
 
 
