@@ -9,12 +9,14 @@ html
     link(rel='stylesheet', href='/css/basic.css')
     link(rel='stylesheet', href='/css/dropzone.css')
     link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/loader.css')
     link(rel='stylesheet', href='/res/css')
     script(src="//code.jquery.com/jquery-1.11.0.min.js")
     script(src="//code.jquery.com/jquery-migrate-1.2.1.min.js")
     script(src="/js/bootstrap.js")
     script(src='/js/retina.min.js')
     script(src="/js/dropzone.js")
+    script(src="/js/loader.js")
 
   body
     nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
@@ -52,3 +54,20 @@ html
           img(src="/res/img/logo")
           |  Powered by
           a(href="http://github.com/PeweeStore/Pewee") Pewee
+
+
+    .modal.fade#loading-modal(role="dialog", data-backdrop="static", data-keyboard="false")
+      //- .modal-dialog: .modal-content
+        //- .modal-body
+      .sk-spinner.sk-spinner-wave(style="color: white;")
+        .sk-rect5
+        .sk-rect4
+        .sk-rect3
+        .sk-rect2
+        .sk-rect1
+        .sk-rect1
+        .sk-rect2
+        .sk-rect3
+        .sk-rect4
+        .sk-rect5
+        

@@ -37,19 +37,19 @@ mixin androidDownloadButton(appName, version, enabled)
 
 mixin removeAndroidVersionButton(appName, version, enabled)
   if enabled
-    a.btn.btn-danger.btn-block.remove-button(href='/app/'+appName+'/'+version+'/remove/android')
+    a.btn.btn-default.btn-block.remove-button(href='#', data-version=version, data-name=appName, data-os="android")
       span.glyphicon.glyphicon-trash
   else
-    a.btn.btn-danger.btn-block.disabled.remove-button
+    a.btn.btn-default.btn-block.disabled.remove-button
       span.glyphicon.glyphicon-trash
 
 
 mixin removeiOSVersionButton(appName, version, enabled)
   if enabled
-    a.btn.btn-danger.btn-block.remove-button(href='/app/'+appName+'/'+version+'/remove/ios')
+    a.btn.btn-default.btn-block.remove-button(href='#', data-version=version, data-name=appName, data-os="ios")
       span.glyphicon.glyphicon-trash
   else
-    a.btn.btn-danger.btn-block.disabled.remove-button
+    a.btn.btn-default.btn-block.disabled.remove-button
       span.glyphicon.glyphicon-trash
 
 
@@ -61,7 +61,7 @@ mixin iOSActions(appName, version, enabled)
       .col-sm-6
         +iOSDownloadButton(appName, version, enabled)
       .col-sm-6
-        +removeiOSVersionButton(appName, verison, enabled)
+        +removeiOSVersionButton(appName, version, enabled)
 
 mixin androidActions(appName, version, enabled)
   if !authenticateAsAdministrator
@@ -71,7 +71,7 @@ mixin androidActions(appName, version, enabled)
       .col-sm-6
         +androidDownloadButton(appName, version, enabled)
       .col-sm-6
-        +removeAndroidVersionButton(appName, verison, enabled)
+        +removeAndroidVersionButton(appName, version, enabled)
 
 mixin versionLine(appName, version, os)
   .row.app-detail-version-row
@@ -121,12 +121,12 @@ mixin header()
 block navbarcontent
   if authenticateAsAdministrator
     ul.nav.navbar-nav
-      li: a(data-toggle="modal" data-target="#delete-app-modal") 
-        span.glyphicon.glyphicon-trash
-        |  Delete project
       li: a(data-toggle="modal" data-target="#upload-version-modal") 
         span.glyphicon.glyphicon-upload
         |  Upload an app
+      li: a(data-toggle="modal" data-target="#delete-app-modal") 
+        span.glyphicon.glyphicon-trash
+        |  Delete project
         
 
 
@@ -160,12 +160,19 @@ block content
           button.btn.btn-sm.btn-default(data-dismiss="modal") Cancel
           button.btn.btn-sm.btn-danger() Delete project
 
-  #upload-version-modal.modal.fade(role="dialog")
-    .modal-dialog: .modal-content
-      .modal-body
-        form.dropzone.dz-clickable#upload-version-dropzone(action="#")
-          //- input(type="file", name="file")
-      .modal-footer
-          button.btn.btn-sm.btn-default(data-dismiss="modal") Cancel
+  include upload-modal.jade
+
+  script(type="text/javascript").
+    $(".remove-button").on('click', function() {
+      var appname = $(this).data("name");
+      var version = $(this).data("version");
+      var os = $(this).data("os");
+
+      loadAndWait(function(onFinish) {
+        $.post("/app/" + appname + "/" + version + "/remove/" + os, function(data, textStatus) {
+            location.reload();
+        });
+      });
+    });
 
 

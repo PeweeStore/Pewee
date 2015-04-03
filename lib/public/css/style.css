@@ -169,6 +169,10 @@ a {
   min-width: 60px;
 }
 
+.navbar-nav > li {
+  cursor: pointer;
+}
+
 @media (max-width: 650px) {
 
   #app-detail-app-list-ios-header > span {
