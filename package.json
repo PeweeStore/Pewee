@@ -1,6 +1,6 @@
 {
   "name": "pewee",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "private": true,
   "description": "",
   "author": "Vincent Saluzzo <vincentsaluzzo@gmail.com>",
@@ -43,7 +43,7 @@
     "multer": "0.1.8",
     "mime": "*",
     "adm-zip": "*",
-    "plist": "*",
+    "plist": "PeweeStore/plist.js",
     "bplist-parser": "*",
     "checksum": "*",
     "adbkit-apkreader": "*",
